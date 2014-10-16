@@ -1,0 +1,125 @@
+SIGQUIT: quit
+PC=0x42d779
+
+runtime.epollwait(0x7fff00000005, 0x7fff260f6470, 0xffffffff00000080)
+        /usr/local/go/src/pkg/runtime/sys_linux_amd64.s:385 +0x19
+runtime.netpoll(0x89ed01)
+        /usr/local/go/src/pkg/runtime/netpoll_epoll.c:71 +0x7d
+findrunnable()
+        /usr/local/go/src/pkg/runtime/proc.c:1222 +0x386
+schedule()
+        /usr/local/go/src/pkg/runtime/proc.c:1320 +0xe3
+park0(0xc21005a480)
+        /usr/local/go/src/pkg/runtime/proc.c:1361 +0xd8
+runtime.mcall(0x42b3ad)
+        /usr/local/go/src/pkg/runtime/asm_amd64.s:178 +0x4b
+
+goroutine 1 [IO wait]:
+net.runtime_pollWait(0x7fc29835a580, 0x77, 0x0)
+        /usr/local/go/src/pkg/runtime/netpoll.goc:116 +0x6a
+net.(*pollDesc).Wait(0xc21004f760, 0x77, 0x7fc298358f88, 0xb)
+        /usr/local/go/src/pkg/net/fd_poll_runtime.go:81 +0x34
+net.(*pollDesc).WaitWrite(0xc21004f760, 0xb, 0x7fc298358f88)
+        /usr/local/go/src/pkg/net/fd_poll_runtime.go:90 +0x30
+net.(*netFD).Write(0xc21004f700, 0xc21005d000, 0x66, 0xb8, 0x0, ...)
+        /usr/local/go/src/pkg/net/fd_unix.go:297 +0x3e2
+net.(*conn).Write(0xc210000248, 0xc21005d000, 0x66, 0xb8, 0x6, ...)
+        /usr/local/go/src/pkg/net/net.go:130 +0xc5
+fmt.Fprintf(0x7fc29835a6a8, 0xc210000248, 0x667790, 0x13, 0x7fc2981b9a60, ...)
+        /usr/local/go/src/pkg/fmt/print.go:221 +0xb0
+log/syslog.(*netConn).writeString(0xc210049580, 0x1e, 0xc210000220, 0x5, 0x6736d0, ...)
+        /usr/local/go/src/pkg/log/syslog/syslog.go:294 +0x2a8
+log/syslog.(*Writer).write(0xc21000a1e0, 0x1e, 0xc21019f780, 0x37, 0xc210058000, ...)
+        /usr/local/go/src/pkg/log/syslog/syslog.go:276 +0x169
+log/syslog.(*Writer).writeAndRetry(0xc21000a1e0, 0x1e, 0xc21019f780, 0x37, 0x0, ...)
+        /usr/local/go/src/pkg/log/syslog/syslog.go:257 +0xd1
+log/syslog.(*Writer).Write(0xc21000a1e0, 0xc210058000, 0x37, 0x260, 0x89ebc0, ...)
+        /usr/local/go/src/pkg/log/syslog/syslog.go:178 +0x6a
+log.(*Logger).Output(0xc210034140, 0x2, 0xc2104f14a0, 0x1c, 0x0, ...)
+        /usr/local/go/src/pkg/log/log.go:153 +0x405
+log.Printf(0x6790d0, 0x1d, 0x7fc2981b9db8, 0x1, 0x1)
+        /usr/local/go/src/pkg/log/log.go:276 +0x7d
+main.Registrar(0xc21004f690)
+        /home/rclarke/repos/logstash-forwarder/registrar.go:10 +0x124
+main.main()
+        /home/rclarke/repos/logstash-forwarder/logstash-forwarder.go:72 +0x3f9
+
+goroutine 3 [sleep]:
+time.Sleep(0x2540be400)
+        /usr/local/go/src/pkg/runtime/time.goc:31 +0x31
+main.Prospect(0xc21004e340, 0x1, 0x4, 0xc210033990, 0xc21000b620)
+        /home/rclarke/repos/logstash-forwarder/prospector.go:34 +0x3f3
+created by main.main
+        /home/rclarke/repos/logstash-forwarder/logstash-forwarder.go:63 +0x347
+
+goroutine 4 [chan send]:
+main.Spool(0xc21000b620, 0xc21004f620, 0x3e8, 0x6fc23ac00)
+        /home/rclarke/repos/logstash-forwarder/spooler.go:54 +0x4e8
+created by main.main
+        /home/rclarke/repos/logstash-forwarder/logstash-forwarder.go:67 +0x3b2
+
+goroutine 5 [chan send]:
+main.Publishv1(0xc21004f620, 0xc21004f690, 0xc21004f540)
+        /home/rclarke/repos/logstash-forwarder/publisher1.go:128 +0x930
+created by main.main
+        /home/rclarke/repos/logstash-forwarder/logstash-forwarder.go:69 +0x3e6
+
+goroutine 7 [sleep]:
+time.Sleep(0x3b9aca00)
+        /usr/local/go/src/pkg/runtime/time.goc:31 +0x31
+main.(*Harvester).readline(0xc210033cf0, 0xc21000a540, 0x2540be400, 0x662be5d2c84, 0x0, ...)
+        /home/rclarke/repos/logstash-forwarder/harvester.go:127 +0xfe
+main.(*Harvester).Harvest(0xc210033cf0, 0xc21000b620)
+        /home/rclarke/repos/logstash-forwarder/harvester.go:45 +0x2f6
+created by main.prospector_scan
+        /home/rclarke/repos/logstash-forwarder/prospector.go:125 +0x8df
+
+goroutine 8 [finalizer wait]:
+runtime.park(0x411ed0, 0x89dbe0, 0x89c228)
+        /usr/local/go/src/pkg/runtime/proc.c:1342 +0x66
+runfinq()
+        /usr/local/go/src/pkg/runtime/mgc0.c:2279 +0x84
+runtime.goexit()
+        /usr/local/go/src/pkg/runtime/proc.c:1394
+
+goroutine 9 [syscall]:
+runtime.goexit()
+        /usr/local/go/src/pkg/runtime/proc.c:1394
+
+goroutine 10 [sleep]:
+time.Sleep(0x3b9aca00)
+        /usr/local/go/src/pkg/runtime/time.goc:31 +0x31
+main.(*Harvester).readline(0xc2104deea0, 0xc21000aa20, 0x2540be400, 0x31c6ab9a4b8, 0x0, ...)
+        /home/rclarke/repos/logstash-forwarder/harvester.go:127 +0xfe
+main.(*Harvester).Harvest(0xc2104deea0, 0xc21000b620)
+        /home/rclarke/repos/logstash-forwarder/harvester.go:45 +0x2f6
+created by main.prospector_scan
+        /home/rclarke/repos/logstash-forwarder/prospector.go:132 +0xa85
+
+goroutine 11 [chan send]:
+main.(*Harvester).Harvest(0xc2103d19f0, 0xc21000b620)
+        /home/rclarke/repos/logstash-forwarder/harvester.go:83 +0x88e
+created by main.prospector_scan
+        /home/rclarke/repos/logstash-forwarder/prospector.go:132 +0xa85
+
+rax     0xfffffffffffffffc
+rbx     0x89ed20
+rcx     0xffffffffffffffff
+rdx     0x80
+rdi     0x5
+rsi     0x7fff260f6470
+rbp     0x0
+rsp     0x7fff260f6430
+r8      0xc210033870
+r9      0x0
+r10     0xffffffff
+r11     0x202
+r12     0x574e96ee
+r13     0x62fb8303
+r14     0x77103ff3
+r15     0x38ac167a
+rip     0x42d779
+rflags  0x202
+cs      0x33
+fs      0x0
+gs      0x0
